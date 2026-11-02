@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hi po hehe</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ffe1e9, #fff0f5, #ffd6e3);
+        }
+
+        #container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        #inv {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px 25px;
+            border-radius: 28px;
+            box-shadow: 0 15px 45px rgba(220, 80, 130, 0.18);
+            border: 2px solid white;
+        }
+
+        .img-icon {
+            font-size: 65px;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        .img-icon img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        h1 {
+            color: #d6336c;
+            font-size: 27px;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #875568;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .divider {
+            width: 65px;
+            height: 4px;
+            background: #ff8fab;
+            border-radius: 10px;
+            margin: 0 auto 30px;
+        }
+
+        .button-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            min-height: 70px;
+        }
+
+        button {
+            border: none;
+            border-radius: 50px;
+            padding: 14px 22px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.25s ease, background 0.2s;
+            white-space: nowrap;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .yes {
+            background: #ff477e;
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 71, 126, 0.3);
+            transform-origin: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .yes:hover {
+            background: #e8326a;
+        }
+
+        .no {
+            background: #f1e7eb;
+            color: #795464;
+        }
+
+        /* The No button can escape the invitation card */
+        .no.escaping {
+            position: fixed;
+            z-index: 999;
+        }
+    #result {
+        display: none;
+        width: 100%;
+        max-width: 420px;
+        margin: 25px auto;
+        padding: clamp(20px, 5vw, 30px);
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid white;
+        border-radius: 25px;
+        box-shadow: 0 15px 40px rgba(214, 51, 108, 0.15);
+        animation: popIn 0.5s ease;
+        overflow-wrap:break-word;
+    }
+
+    #result h2 {
+        text-align: center;
+        color: #d6336c;
+        font-size: 30px;
+        margin-bottom: 25px;
+    }
+
+    #dateForm label {
+        display: block;
+        color: #875568;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    #dateForm input[type="text"],
+    #dateForm input[type="time"] {
+        width: 100%;
+        padding: 13px 15px;
+        border: 1px solid #f2d4df;
+        border-radius: 12px;
+        outline: none;
+        background: #fff8fa;
+        color: #563344;
+        font-size: 15px;
+        margin-bottom: 20px;
+        transition: 0.3s;
+    }
+
+    #dateForm input:focus {
+        border-color: #ff7fa5;
+        box-shadow: 0 0 0 3px rgba(255, 127, 165, 0.15);
+    }
+
+    #dateForm input[type="submit"] {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 50px;
+        background: #ff477e;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 6px 15px rgba(255, 71, 126, 0.25);
+        transition: 0.3s;
+    }
+
+    #confirmed {
+    width: 100%;
+    text-align: center;
+    animation: popIn 0.6s ease;
+}
+
+#confirmed h2 {
+    margin-bottom: 15px;
+}
+
+#confirmed p {
+    color: #875568;
+    font-size: clamp(14px, 3.8vw, 16px);
+    line-height: 1.7;
+    margin: 15px 0;
+}
+
+.date-gif {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    object-fit: contain;
+    margin: 15px auto;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(214, 51, 108, 0.15);
+}
+
+  .date-gif {
+        max-width: 100%;
+        max-height: 280px;
+    }
+    #dateForm input[type="submit"]:hover {
+        background: #e8326a;
+        transform: translateY(-2px);
+    }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.12);
+            }
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 480px) {
+            #inv {
+                padding: 35px 18px;
+            }
+
+            h1 {
+                font-size: 23px;
+            }
+
+            .button-area {
+                gap: 10px;
+            }
+
+            button {
+                padding: 13px 16px;
+                font-size: 13px;
+            }
+            #result {
+            padding: 25px 20px;
+        }
+
+        #result h2 {
+            font-size: 26px;
+        }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main id="container">
+
+        <section id="inv">
+
+            <div class="img-icon">
+                <img src="/gooutwithme/img/catwave-gif.gif" alt="Cat waving">
+            </div>
+
+            <h1>
+                Will you go out with me to church this upcoming Sunday?
+            </h1>
+
+            <p>
+                I've been meaning to tell u this hehe 🥹
+            </p>
+
+            <div class="divider"></div>
+
+            <div class="button-area">
+
+                <button id="yes" class="yes">
+                    Yes, I'd love to! 💗
+                </button>
+
+                <button id="no" class="no">
+                    No 🙈
+                </button>
+
+            </div>
+
+        </section>
+
+        <section id="result">
+            <h2>
+                It's a Date!
+            </h2>
+            <form id="dateForm">
+                <label for="loc">Location:</label>
+                <input type="text" id="loc" name="location" required>
+                <br><br>
+                <label for="time">Meeting time:</label>
+                <input type="time" id="time" name="time" required>
+                <br><br>
+                <input type="submit" value="Confirm">
+            </form>
+            <div id="confirmed" style="display: none;">
+                <p>See youuu Mae!</p>
+                
+    <video class="date-gif" autoplay loop muted playsinline>
+        <source src="img/bear-gif.mp4" type="video/mp4">
+        Your browser does not support video playback.
+    </video>
+                <p>looking forward to spending time with you!</p>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        emailjs.init({
+    publicKey: "FP2lsaZsdzLPiOiye"
+});
+        const yesBtn = document.getElementById("yes");
+        const noBtn = document.getElementById("no");
+        const invitation = document.getElementById("inv");
+        const result = document.getElementById("result");
+
+        let yesScale = 1;
+        let lastMove = 0;
+
+        // Move the No button to a random position
+        function moveNoButton() {
+            const maxX = window.innerWidth - noBtn.offsetWidth - 10;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 10;
+
+            const randomX = Math.max(
+                10,
+                Math.random() * Math.max(0, maxX)
+            );
+
+            const randomY = Math.max(
+                10,
+                Math.random() * Math.max(0, maxY)
+            );
+
+            noBtn.classList.add("escaping");
+
+            noBtn.style.left = randomX + "px";
+            noBtn.style.top = randomY + "px";
+
+            // Make the Yes button grow whenever No escapes
+            yesScale = Math.min(yesScale + 0.12, 3.5);
+
+            yesBtn.style.transform = `scale(${yesScale})`;
+        }
+
+        // Desktop: run away when the cursor gets close
+        document.addEventListener("mousemove", function (event) {
+            if (window.matchMedia("(pointer: coarse)").matches) {
+                return;
+            }
+
+            const rect = noBtn.getBoundingClientRect();
+
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const distance = Math.hypot(
+                event.clientX - centerX,
+                event.clientY - centerY
+            );
+
+            const now = Date.now();
+
+            if (distance < 100 && now - lastMove > 250) {
+                lastMove = now;
+                moveNoButton();
+            }
+        });
+
+        // Mobile: run away whenever someone taps No
+        noBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            moveNoButton();
+        });
+
+        // Desktop: also escape when the button is clicked
+        noBtn.addEventListener("mouseenter", function () {
+            if (!window.matchMedia("(pointer: coarse)").matches) {
+                moveNoButton();
+            }
+        });
+
+        // What happens when Yes is clicked
+        yesBtn.addEventListener("click", function () {
+            invitation.style.display = "none";
+            noBtn.style.display = "none";
+
+            result.style.display = "block";
+
+            document.body.style.background =
+                "linear-gradient(135deg, #ffb6c9, #ffe4ec, #ffc2d5)";
+        });
+
+const dateForm = document.getElementById("dateForm");
+const confirmed = document.getElementById("confirmed");
+
+dateForm.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const submitBtn = dateForm.querySelector('input[type="submit"]');
+
+    submitBtn.disabled = true;
+    submitBtn.value = "Sending... 💗";
+
+    try {
+        await emailjs.sendForm(
+            "service_ecv2ony",
+            "template_1bfh9ls",
+            dateForm
+        );
+
+        // Email successfully sent!
+        dateForm.style.display = "none";
+        confirmed.style.display = "block";
+
+} catch (error) {
+    console.error("Email sending failed:", error);
+    console.log("Error status:", error.status);
+    console.log("Error details:", error.text);
+
+    alert("Email error: " + error.text);
+
+    submitBtn.disabled = false;
+    submitBtn.value = "Confirm";
+} 
+});
+
+    </script>
+
+</body>
+</html>
